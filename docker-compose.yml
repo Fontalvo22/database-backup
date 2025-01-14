@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+    app:
+        container_name: app
+        build: .
+        volumes:
+            - .:/app
+
+        env_file:
+            - .env
+        depends_on:
+            - mongo
+        networks:
+            - database_backup_internal_network
+        ports:
+            - 3000:3000
+
+    mongo:
+        container_name: mongodb
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+            MONGO_INITDB_DATABASE: tasks
+        volumes:
+            - ./mongo-data:/data/db
+            - ./init-scripts/:/docker-entrypoint-initdb.d # Montar el directorio de scripts de inicialización
+        ports:
+            - 27018:27017
+        networks:
+            - database_backup_internal_network
+
+    mongo-express:
+        image: mongo-express
+        restart: always
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: example
+            ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+            ME_CONFIG_BASICAUTH: false
+        links:
+            - mongo
+        depends_on:
+            - mongo
+        networks:
+            - database_backup_internal_network
+
+    mysql:
+        container_name: mysql
+        image: mysql:8.0-debian
+        # restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: example
+            MYSQL_DATABASE: shop
+        volumes:
+            - ./mysql-data:/var/lib/mysql
+        ports:
+            - 3306:3306
+        networks:
+            - database_backup_internal_network
+
+    postgres:
+        container_name: postgresql
+        image: postgres:14.15-alpine3.21
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: example
+            POSTGRES_DB: shop
+        volumes:
+            - ./postgree-data:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
+        networks:
+            - database_backup_internal_network
+
+networks:
+    database_backup_internal_network:
+        driver: bridge
+        # external: true

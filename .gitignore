@@ -1,0 +1,7 @@
+mysql-data
+mongo-data
+postgree-data
+.aws
+__pycache__
+backups/*
+.codegpt

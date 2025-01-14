@@ -1,0 +1,2 @@
+If you are trying to connect to MongoDB running on your local host,
+you must enter your connection string like this: mongodb://host.docker.internal:27017/

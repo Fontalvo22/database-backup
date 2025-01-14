@@ -1,0 +1,6 @@
+mysql-data
+mongo-data
+backups
+*.rar
+*zip
+postgree-data
