@@ -31,7 +31,7 @@ DATABASE_NAME = 'shop'
 
 MONGO_URI = f"mongodb://{MONGO_DB_SETTINGS['username']}:{MONGO_DB_SETTINGS['password']}@{MONGO_DB_SETTINGS['host']}:{MONGO_DB_SETTINGS['port']}/?authSource={MONGO_DB_SETTINGS['authSource']}"
 
-STORAGE_TYPE = "local"
+STORAGE_TYPE = "cloud"
 
 
 # mongodb://root:example@localhost:27018/?authSource=admin

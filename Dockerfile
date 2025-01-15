@@ -2,6 +2,8 @@ FROM python:3.14.0a1-bookworm
 
 WORKDIR /app
 
+COPY .aws /root/.aws
+
 COPY . .
 
 RUN pip install -r requirements.txt

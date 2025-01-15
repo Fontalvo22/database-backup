@@ -7,6 +7,6 @@ database = DatabaseContext(DATABASE_TYPE)
 
 database.backup()
 
-# storage = StorageContext(STORAGE_TYPE)
-# storage.save()
+storage = StorageContext(STORAGE_TYPE)
+storage.save()
 

@@ -1,7 +1,7 @@
 mysql-data
 mongo-data
 postgree-data
-.aws
+.aws/credentials
 __pycache__
 backups/*
 .codegpt
