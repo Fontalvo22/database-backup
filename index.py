@@ -1,12 +1,16 @@
 
 from src.strategies.database_strategies.database_context import DatabaseContext
 from src.strategies.storage_strategies.storage_context import StorageContext
-from src.settings import DATABASE_TYPE, STORAGE_TYPE
+from dotenv import load_dotenv
+import os
 
-database = DatabaseContext(DATABASE_TYPE)
+load_dotenv()
+
+
+database = DatabaseContext(os.getenv('DATABASE_TYPE'))
 
 database.backup()
 
-storage = StorageContext(STORAGE_TYPE)
+storage = StorageContext(os.getenv('STORAGE_TYPE'))
 storage.save()
 

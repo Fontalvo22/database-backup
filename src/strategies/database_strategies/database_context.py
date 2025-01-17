@@ -7,7 +7,7 @@ class DatabaseContext:
     strategy = None
 
     def __init__(self, strategy):
-        if strategy == 'MongoDB':
+        if strategy == 'mongodb':
             self.strategy = MongoStrategy()
 
         if strategy == 'mysql':

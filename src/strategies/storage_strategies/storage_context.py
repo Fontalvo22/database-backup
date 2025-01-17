@@ -5,7 +5,6 @@ class StorageContext:
         if strategy == 'local':
             self.strategy = LocalStrategy()
         if strategy == 'cloud':
-            print('holas')
             self.strategy = CloudStrategy()
     
     def save(self):

@@ -1,7 +1,10 @@
-from src.settings import POSTGRE_SETTINGS, DATABASE_TYPE, DATABASE_NAME
-import subprocess
 import os
+import subprocess
 import psycopg2
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class PostgreSql:
     _instance = None
@@ -9,34 +12,40 @@ class PostgreSql:
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super(PostgreSql, cls).__new__(cls)
-            cls._instance.connect(POSTGRE_SETTINGS)
+            cls._instance.connect()
 
         return cls._instance
 
-    def connect(self, credentials):
+    def connect(self):
         try:
-            self.client = psycopg2.connect(f"dbname={DATABASE_NAME} user={credentials['username']} password={credentials['password']} host={credentials['host']}")
+            self.client = psycopg2.connect(
+                dbname=os.getenv('POSTGRE_DB_NAME'),
+                user=os.getenv('POSTGRE_USERNAME'),
+                password=os.getenv('POSTGRE_PASSWORD'),
+                host=os.getenv('POSTGRE_HOST'),
+                port=os.getenv('POSTGRE_PORT')
+            )
             self.cursor = self.client.cursor()
-            # self.database = self.client[MONGO_DB_SETTINGS['db_name']]
-            # self.database.get_collection("products")
         except Exception as error:
             raise error
-    
+
     def backup(self):
-        try:      
-            project_root = project_root = os.getcwd()
-            
-            if not os.path.exists(f"{project_root}/backups/{DATABASE_TYPE}/{DATABASE_NAME}"):
-                os.makedirs(f"{project_root}/backups/{DATABASE_TYPE}/{DATABASE_NAME}")
-            
-            subprocess.run(
-                ["pg_dump", "-h", POSTGRE_SETTINGS['host'], "-U", POSTGRE_SETTINGS['username'], "-d", DATABASE_NAME, "-f", f"{project_root}/backups/{DATABASE_TYPE}/{DATABASE_NAME}/{DATABASE_NAME}.sql"],
+        try:
+            project_root = os.getcwd()
+            backup_dir = os.path.join(project_root, 'backups', os.getenv('DATABASE_TYPE'), os.getenv('POSTGRE_DB_NAME'))
+
+            if not os.path.exists(backup_dir):
+                os.makedirs(backup_dir)
+
+            backup_file = os.path.join(backup_dir, f"{os.getenv('POSTGRE_DB_NAME')}.sql")
+            result = subprocess.run(
+                ["pg_dump", "-h", os.getenv('POSTGRE_HOST'), "-U", os.getenv('POSTGRE_USERNAME'), "-d", os.getenv('POSTGRE_DB_NAME'), "-f", backup_file],
                 check=True,
                 capture_output=True,
                 text=True,
-                env={"PGPASSWORD": POSTGRE_SETTINGS['password']}
+                env={"PGPASSWORD": os.getenv('POSTGRE_PASSWORD')}
             )
 
-            print("Backup successful!")
+            print("Backup successful:", result.stdout)
         except subprocess.CalledProcessError as e:
             print("Error during backup:", e.stderr)

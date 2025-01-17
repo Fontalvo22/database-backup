@@ -1,21 +1,24 @@
 from src.strategies.storage_strategies.storage_strategy import StorageStrategy
-from src.settings import DATABASE_NAME, DATABASE_TYPE
 import os
 import shutil
 
-class LocalStrategy():
+class LocalStrategy(StorageStrategy):
     
     def __init__(self):
         project_root = os.getcwd()
-        self.path = f"{project_root}/backups/{DATABASE_TYPE}"
-
+        self.path = f"{project_root}/backups/{ os.getenv('DATABASE_TYPE')}"
+        
     def save(self):
         
-        backup_zip = f"{self.path}/{DATABASE_NAME}"
+        databases_cases = {
+                "mysql": "MYSQL_",
+                "postgre": "POSTGRE_",
+                "mongodb": "MONGO_DB_"
+            }
 
-        shutil.make_archive(backup_zip, 'zip', backup_zip)
-        shutil.rmtree(backup_zip)
-        print(f"Backup compressed to {backup_zip}")
+        database_name = databases_cases[os.getenv('DATABASE_TYPE')]+"DB_NAME"
+
+        self.package(os.getenv(database_name), os.getenv('DATABASE_TYPE'))+".zip"
 
 
     def load(self) -> str:

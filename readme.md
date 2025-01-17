@@ -1,38 +1,27 @@
-# Project Title
+# Database backup
 
-One Paragraph of the project description
-
-Initially appeared on
-[gist](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2). But the page cannot open anymore so that is why I have moved it here.
-
-## Getting Started
-
-These instructions will give you a copy of the project up and running on
-your local machine for development and testing purposes. See deployment
-for notes on deploying the project on a live system.
+With this application you can setup your databases backups in short steps and storage locally or in as AWS S3 instance
 
 ### Prerequisites
 
-Requirements for the software and other tools to build, test and push
+This works using Docker, but if want it, you can run with a normal python installation; but without Docker you cant run Mysql, MongoDB, PostgreSQL and their initial data for testing
 
--   [Example 1](https://www.example.com)
--   [Example 2](https://www.example.com)
+-   [python](https://www.python.org/)
+-   [docker](https://hub.docker.com/) (optional)
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development
-environment running
+1.\_ open a terminal in the folder. Example:
 
-Say what the step will be
+    cd ~/database-backup
 
-    Give the example
+2.\_ if you have docker and docker-compose already installed, just run:
 
-And repeat
+    docker-compose up -d --build
 
-    until finished
+3.\_ If everything were fine, enter inside the container executing:
 
-End with an example of getting some data out of the system or using it
-for a little demo
+    docker exec -it app bash
 
 ## Running the tests
 
