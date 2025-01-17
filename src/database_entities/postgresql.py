@@ -27,7 +27,8 @@ class PostgreSql:
             )
             self.cursor = self.client.cursor()
         except Exception as error:
-            raise error
+            print(error)
+            exit()
 
     def backup(self):
         try:

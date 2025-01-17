@@ -29,7 +29,8 @@ class MongoDB:
 
 
         except Exception as error:
-            raise error
+            print(error)
+            exit()
     
     def backup(self):
         try:

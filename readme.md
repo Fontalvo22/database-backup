@@ -36,3 +36,5 @@ If you are trying to connect to MongoDB running on your local host, you must ent
 host.docker.internal:{port-numer}
 
 is you are running it without Docker, just write as "localhost"
+
+Remember use a password for mongoDB connections

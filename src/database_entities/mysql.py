@@ -23,7 +23,8 @@ class MySql:
             # self.database = self.client[MONGO_DB_SETTINGS['db_name']]
             # self.database.get_collection("products")
         except Exception as error:
-            raise error
+            print(error)
+            exit()
     
     def backup(self):
         try:      
