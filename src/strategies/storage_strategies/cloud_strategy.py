@@ -16,10 +16,10 @@ class CloudStrategy(StorageStrategy):
             databases_cases = {
                 "mysql": "MYSQL_",
                 "postgre": "POSTGRE_",
-                "mongodb": "MONGO_DB_"
+                "mongodb": "MONGO_DB"
             }
 
-            database_name = databases_cases[os.getenv('DATABASE_TYPE')]+"DB_NAME"
+            database_name = databases_cases[os.getenv('DATABASE_TYPE')]+"_NAME"
 
             backup_zip = self.package(os.getenv(database_name), os.getenv('DATABASE_TYPE'))+".zip"
 
