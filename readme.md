@@ -38,3 +38,13 @@ host.docker.internal:{port-numer}
 is you are running it without Docker, just write as "localhost"
 
 Remember use a password for mongoDB connections
+
+## About AWS integration
+
+If you are using Docker, follow these steps:
+
+1.\_ create a file called "credentials" inside the ".aws" folder, using the "credentials.example" file as a template.
+
+For find your AWS credentials, you can check this [youtube video](https://www.youtube.com/watch?v=eElHCn4nDZw)
+
+1.\_ Once you have your AWS keys set up, you can run the image creation again and try to storage your backups in the cloud
