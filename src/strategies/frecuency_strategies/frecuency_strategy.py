@@ -24,7 +24,7 @@ class FrecuencyStrategy:
 
             backup_frequency = os.getenv('BACKUP_FREQUENCY')
             if backup_frequency in self._frequencies:
-                job.setall('0 0 * * *')
+                job.setall(self._frequencies[os.getenv('BACKUP_FREQUENCY')])
             
             cron.write()
             print(f"Cron job set with frequency: {self._frequencies[backup_frequency]} ({os.getenv('BACKUP_FREQUENCY')})")

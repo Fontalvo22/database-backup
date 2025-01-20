@@ -5,3 +5,4 @@ postgree-data
 __pycache__
 backups/*
 .codegpt
+crontabs/root

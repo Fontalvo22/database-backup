@@ -25,7 +25,7 @@ class CloudStrategy(StorageStrategy):
 
 
             with open(backup_zip, 'rb') as data:
-                result = s3.Bucket('franklinfontalvo').put_object(Key=f"{os.getenv(database_name)}-{os.getenv('DATABASE_TYPE')}.zip", Body=data)
+                result = s3.Bucket(os.getenv('AWS_BUCKET_NAME')).put_object(Key=f"{os.getenv(database_name)}-{os.getenv('DATABASE_TYPE')}.zip", Body=data)
                 print("Backup saved succesfully to cloud!")
         except Exception as e:
             print(f"An error occurred: {e}")
